@@ -124,24 +124,25 @@ function App() {
 
   return (
     <div className='h-full p-8 text-slate-800 bg-gradient-to-r from-cyan-500 to-blue-500'>
-      <h1 className='text-center text-5xl mb-4 font-display text-white'>Tic Tac Toe</h1>
+      <h1 className='text-center text-3xl mb-4 font-display text-white md:text-5xl'>Tic Tac Toe</h1>
       
-      <div className='grid grid-cols-3 gap-3 mx-auto w-96'>
-        {gameState.map((player, index) => (
-           <Square 
-           key={index} 
-           index = {index}
-           player={player}
-           onClick= {handleCellClick}
-            />
-           
-        ))}
-      </div>
-      <div className='mx-auto flex flex-col text-center w-96 text-2xl text-serif text-white'>
-        <p className='mt-2'>Next Player: <span>{currentPlayer}</span></p>
-        <p className='mt-2'>Player X score: <span>{scores.X}</span></p>
-        <p className='mt-2'>Player O score: <span>{scores.O}</span></p>
-
+      <div className='flex flex-col md:flex-row md:justify-center'>
+        <div className=' grid grid-cols-3 gap-3 mx-auto w-72 md:mr-[34%] md:w-96'>
+          {gameState.map((player, index) => (
+             <Square
+             key={index}
+             index = {index}
+             player={player}
+             onClick= {handleCellClick}
+              />
+        
+          ))}
+        </div>
+        <div className='flex flex-col text-center w-96 text-2xl text-serif text-white md:order-first sm:mx-auto'>
+          <p className='mt-2'>Next Player: <span>{currentPlayer}</span></p>
+          <p className='mt-2'>Player X score: <span>{scores.X}</span></p>
+          <p className='mt-2'>Player O score: <span>{scores.O}</span></p>
+        </div>
       </div>
     </div>
   )

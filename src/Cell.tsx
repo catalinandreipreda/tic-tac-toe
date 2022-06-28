@@ -14,7 +14,7 @@ export default function Square({index, onClick, player}: Props) {
         <div   
             data-cell-index = {index}
             {...{onClick}}     
-            className= {`h-36 border-solid border-4 border-slate-200 font-display text-7xl text-center flex justify-center items-center cursor-pointer ${hoverStyle}`}
+            className= {`h-36 border-solid border-4 border-slate-200 font-display text-4xl h-24 md:h-32 md:text-7xl text-center flex justify-center items-center cursor-pointer ${hoverStyle}`}
         >
             <span 
             className={`transform transition-all dration-150 ease-out ${scale} ${textColor}`}>{player}</span>
