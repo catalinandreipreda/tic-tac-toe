@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Square from './Square'
+import Square from './Cell'
+
+type Scores = {
+  [key: string] : number
+}
 
 const INITIAL_GAME_STATE = ["", "", "", "", "", "", "", "", ""]
-const INITIAL_SCORES = {X:0, O:0}
+const INITIAL_SCORES: Scores = {X:0, O:0}
 const WIN_COMBOS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -13,6 +17,7 @@ const WIN_COMBOS = [
   [0, 4, 8],
   [2, 4, 6],
 ]
+
 
 
 function App() {
@@ -80,6 +85,14 @@ function App() {
   const handleWin = () =>{
     /** Displaying message to winner and reseting the game */
     alert(`Player ${currentPlayer} won! Congratulations!`)
+
+    // Updating the score
+    const newPlayerScore = scores[currentPlayer] + 1
+    const newScores = {...scores}
+    newScores[currentPlayer] = newPlayerScore
+    setScores(newScores) // Updating the score state
+    localStorage.setItem("scores", JSON.stringify(newScores)) // Saving scores in local storage
+    // Reseting the game
     setGameState(INITIAL_GAME_STATE)
   }
   const handleDraw = () =>{
@@ -100,6 +113,15 @@ function App() {
     checkForWinner()
   }, [gameState])
 
+  useEffect(()=>{
+    const storedScores = localStorage.getItem("scores")
+    if(storedScores){
+      setScores(JSON.parse(storedScores))
+    }
+    
+
+  }, [])
+
   return (
     <div className='h-full p-8 text-slate-800 bg-gradient-to-r from-cyan-500 to-blue-500'>
       <h1 className='text-center text-5xl mb-4 font-display text-white'>Tic Tac Toe</h1>
@@ -115,7 +137,12 @@ function App() {
            
         ))}
       </div>
-      <div>Scores</div>
+      <div className='mx-auto flex flex-col text-center w-96 text-2xl text-serif text-white'>
+        <p className='mt-2'>Next Player: <span>{currentPlayer}</span></p>
+        <p className='mt-2'>Player X score: <span>{scores.X}</span></p>
+        <p className='mt-2'>Player O score: <span>{scores.O}</span></p>
+
+      </div>
     </div>
   )
 }
